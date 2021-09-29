@@ -3,6 +3,7 @@ namespace NRK.Dotnetskolen
 module Domain =
 
     open System
+    open System.Text.RegularExpressions
 
     type Sending = {
         Tittel: string
@@ -12,3 +13,10 @@ module Domain =
     }
 
     type Epg = Sending list
+
+    let isTitleValid (title: string) : bool =
+        let titleRegex = Regex(@"^[\p{L}0-9\.,-:!]{5,100}$")
+        titleRegex.IsMatch(title)
+
+    let isChannelValid (channel: string) : bool =
+        channel = "NRK1" || channel = "NRK2"
