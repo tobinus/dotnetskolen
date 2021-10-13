@@ -1,21 +1,27 @@
-// Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
+namespace NRK.Dotnetskolen.Api
 
-open System
-open NRK.Dotnetskolen.Domain
+module Program =
 
-// Define a function to construct a message to print
-let from whom =
-    sprintf "from %s" whom
+    open Microsoft.Extensions.Hosting
+    open Microsoft.AspNetCore.Hosting
+    open Microsoft.AspNetCore.Builder
+    open Microsoft.Extensions.DependencyInjection
+    open Giraffe
 
-[<EntryPoint>]
-let main argv =
-    let epg = [
-        {
-            Tittel = "Dagsrevyen"
-            Kanal = "NRK1"
-            StartTidspunkt = DateTimeOffset.Parse("2021-04-16T19:00:00+02:00")
-            SluttTidspunkt = DateTimeOffset.Parse("2021-04-16T19:30:00+02:00")
-        }
-    ]
-    printfn "%A" epg
-    0 // return an integer exit code
+    let configureApp (webHostContext: WebHostBuilderContext) (app: IApplicationBuilder) = ()
+
+    let configureServices (webHostContext: WebHostBuilderContext) (services: IServiceCollection) = ()
+
+    let createHostBuilder args =
+        Host
+            .CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(fun webHostBuilder ->
+                webHostBuilder
+                    .Configure(configureApp)
+                    .ConfigureServices(configureServices)
+                |> ignore)
+
+    [<EntryPoint>]
+    let main argv =
+        createHostBuilder(argv).Build().Run()
+        0
