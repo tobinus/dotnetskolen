@@ -8,9 +8,12 @@ module Program =
     open Microsoft.Extensions.DependencyInjection
     open Giraffe
 
-    let configureApp (webHostContext: WebHostBuilderContext) (app: IApplicationBuilder) = ()
+    let configureApp (webHostContext: WebHostBuilderContext) (app: IApplicationBuilder) =
+        let webApp = route "/ping" >=> text "pong"
+        app.UseGiraffe webApp
 
-    let configureServices (webHostContext: WebHostBuilderContext) (services: IServiceCollection) = ()
+    let configureServices (webHostContext: WebHostBuilderContext) (services: IServiceCollection) =
+        services.AddGiraffe() |> ignore
 
     let createHostBuilder args =
         Host
