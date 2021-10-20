@@ -4,3 +4,4 @@ xunit
 xunit.runner.visualstudio
 coverlet.collector
 Microsoft.AspNetCore.Mvc.Testing
+JsonSchema.Net
