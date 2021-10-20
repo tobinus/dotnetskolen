@@ -9,7 +9,11 @@ module Program =
     open Giraffe
 
     let configureApp (webHostContext: WebHostBuilderContext) (app: IApplicationBuilder) =
-        let webApp = route "/ping" >=> text "pong"
+        let webApp =
+            GET
+            >=> choose [ route "/ping" >=> text "pong"
+                         routef "/epg/%s" (fun date -> json date) ]
+
         app.UseGiraffe webApp
 
     let configureServices (webHostContext: WebHostBuilderContext) (services: IServiceCollection) =
